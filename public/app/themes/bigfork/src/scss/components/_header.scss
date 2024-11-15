@@ -1,0 +1,13 @@
+/* Layout: header
+---------------------------------------------------------------------------------- */
+
+.header {
+	color: $white;
+	background: $black;
+}
+
+@include respond(960px) {
+	.header {
+		background: $white;
+	}
+}

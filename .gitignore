@@ -1,0 +1,30 @@
+## ignorance is bliss
+
+# General
+_resampled
+.DS_Store
+*.sublime-*
+*.map
+/*.log
+.env
+.env.*
+!.env.example
+/.idea/
+/.vscode/
+/vendor
+
+# Application
+public/app/plugins/*
+!public/app/plugins/.gitkeep
+public/app/mu-plugins/*/
+public/app/themes/twentytwentyfive/
+public/app/upgrade
+public/app/uploads/*
+!public/app/uploads/.gitkeep
+public/app/cache/*
+
+# WordPress
+public/wp
+
+# WP-CLI
+wp-cli.local.yml

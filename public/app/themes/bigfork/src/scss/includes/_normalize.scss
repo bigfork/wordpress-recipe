@@ -1,0 +1,45 @@
+@import '~sanitize.css';
+@import '~sanitize.css/assets.css';
+@import '~sanitize.css/forms.css';
+@import '~sanitize.css/reduce-motion.css';
+
+/* Don't mess with cursor */
+html {
+	cursor: auto;
+}
+
+/* Remove default margin/padding */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+	padding: 0;
+	margin: 0;
+}
+
+/* Reset list styles */
+ol,
+ul {
+	list-style: none;
+}
+
+/* Remove sanitize VoiceOver workaround */
+nav li::before {
+	content: unset;
+}
+
+button {
+	cursor: pointer;
+}
