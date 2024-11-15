@@ -50,6 +50,7 @@ class Install
         if ($config['ddevShouldStart']) {
             self::startDDEV();
             self::installNpm();
+            self::installComposer();
         }
 
         exit;
@@ -97,6 +98,18 @@ class Install
 
         if (file_exists($themePath . '/package.json')) {
             echo shell_exec('ddev theme install');
+        }
+    }
+
+    /**
+     * Runs "composer install" if a package.json file is present in the project.
+     */
+    protected static function installComposer(): void
+    {
+        $basePath = self::getBasepath();
+
+        if (file_exists($basePath . '/composer.json')) {
+            echo shell_exec('ddev composer install');
         }
     }
 

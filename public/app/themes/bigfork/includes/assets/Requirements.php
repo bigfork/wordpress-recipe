@@ -4,8 +4,8 @@ add_action(
     function () {
         wp_enqueue_script(
             'nesta-script',
-            get_template_directory_uri() . '/dist/js/index.js',
-            ver: filectime(get_template_directory() . '/dist/js/index.js'),
+            get_template_directory_uri() . '/dist/js/app.js',
+            ver: filectime(get_template_directory() . '/dist/js/app.js'),
             args: ['strategy' => 'defer', 'in_footer' => false]
         );
 
