@@ -1,6 +1,6 @@
 # WordPress Recipe
 
-Bigfork’s quickstart recipe for simple WordPress 5 projects. Contains frequently used modules, templates, config settings, JavaScript and CSS.
+Bigfork’s quickstart recipe for simple WordPress projects. Contains frequently used modules, templates, config settings, JavaScript and CSS.
 
 ## Project setup
 
