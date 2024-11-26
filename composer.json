@@ -32,6 +32,7 @@
 		"roots/wp-password-bcrypt": "^1",
 		"vlucas/phpdotenv": "^5",
 		"wp-media/wp-rocket": "^3",
+		"wpackagist-plugin/acf-extended": "^0",
 		"wpackagist-plugin/customizer-disabler": "^2",
 		"wpackagist-plugin/disable-gutenberg": "^3",
 		"wpackagist-plugin/simple-page-ordering": "^2",
