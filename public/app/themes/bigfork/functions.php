@@ -7,9 +7,15 @@
  * @package bigfork
  */
 
-if ( ! defined( '_S_VERSION' ) ) {
-    // Replace the version number of the theme on each release.
-    define( '_S_VERSION', '1.0.0' );
-}
+declare(strict_types=1);
 
-require_once 'includes/includes.php';
+namespace App;
+
+use Timber\Timber;
+
+// Load Composer dependencies.
+require_once __DIR__ . '/includes/Site.php';
+
+Timber::init();
+
+new Site();

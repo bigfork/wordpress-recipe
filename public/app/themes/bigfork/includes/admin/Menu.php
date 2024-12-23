@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 add_action('admin_init', function () {
     if (WP_ENV != 'development') {
         remove_menu_page('edit.php?post_type=acf-field-group');

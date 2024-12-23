@@ -1,44 +1,41 @@
 <?php
 /**
- * The template for displaying archive pages
+ * The template for displaying Archive pages.
  *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
+ * Used to display archive-type pages if nothing more specific matches a query.
+ * For example, puts together date-based pages if no date.php file exists.
  *
- * @package bigfork
+ * Learn more: https://developer.wordpress.org/themes/basics/template-hierarchy/
  */
 
-get_header();
-?>
+declare(strict_types=1);
 
-    <main id="primary" class="site-main">
+namespace App;
 
-        <?php if (have_posts()) : ?>
-            <header class="page-header">
-                <?php
-                the_archive_title('<h1 class="page-title">', '</h1>');
-                the_archive_description('<div class="archive-description">', '</div>');
-                ?>
-            </header><!-- .page-header -->
+use Timber\Timber;
 
-            <?php
-            /* Start the Loop */
-            while (have_posts()) :
-                the_post();
+$templates = [ 'templates/archive.twig', 'templates/index.twig' ];
 
-                /*
-                 * Include the Post-Type-specific template for the content.
-                 * If you want to override this in a child theme, then include a file
-                 * called content-___.php (where ___ is the Post Type name) and that will be used instead.
-                 */
-                get_template_part('template-parts/content', get_post_type());
-            endwhile;
+$title = 'Archive';
+if ( is_day() ) {
+    $title = 'Archive: ' . get_the_date( 'D M Y' );
+} elseif ( is_month() ) {
+    $title = 'Archive: ' . get_the_date( 'M Y' );
+} elseif ( is_year() ) {
+    $title = 'Archive: ' . get_the_date( 'Y' );
+} elseif ( is_tag() ) {
+    $title = single_tag_title( '', false );
+} elseif ( is_category() ) {
+    $title = single_cat_title( '', false );
+} elseif ( is_post_type_archive() ) {
+    $title = post_type_archive_title( '', false );
+    array_unshift( $templates, 'templates/archive-' . get_post_type() . '.twig' );
+}
 
-            the_posts_navigation();
-        else :
-            get_template_part('template-parts/content', 'none');
-        endif;
-        ?>
-    </main><!-- #main -->
-<?php
-get_sidebar();
-get_footer();
+$context = Timber::context(
+    [
+        'title' => $title,
+    ]
+);
+
+Timber::render( $templates, $context );

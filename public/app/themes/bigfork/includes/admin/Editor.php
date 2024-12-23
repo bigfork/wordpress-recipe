@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 add_action('admin_init', function () {
     add_editor_style([
         get_template_directory_uri() . '/dist/css/editor.css',

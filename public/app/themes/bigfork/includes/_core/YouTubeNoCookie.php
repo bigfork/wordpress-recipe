@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 add_filter(
     'embed_oembed_html',
     function ($html, $url, $attr, $post_id) {

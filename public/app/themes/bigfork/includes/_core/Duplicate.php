@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 function duplicate_post_as_draft(): void
 {
     global $wpdb;

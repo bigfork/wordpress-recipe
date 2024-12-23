@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 function getNavigation(string $location, bool $getChildren = false): ?array
 {
     $navbar_items = wp_get_nav_menu_items($location) ?: [];

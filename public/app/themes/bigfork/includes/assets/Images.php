@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 const EXAMPLE = 'homepage_hero';
 
 add_action('after_setup_theme', function () {

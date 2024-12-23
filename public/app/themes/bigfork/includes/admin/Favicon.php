@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 //add_action('admin_head', function () {
 //    ?>
 <!--    <link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml">-->

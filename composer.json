@@ -30,6 +30,7 @@
 		"roots/wordpress": "^6",
 		"roots/wp-config": "^1",
 		"roots/wp-password-bcrypt": "^1",
+		"timber/timber": "^2",
 		"vlucas/phpdotenv": "^5",
 		"wp-media/wp-rocket": "^3",
 		"wpackagist-plugin/acf-extended": "^0",

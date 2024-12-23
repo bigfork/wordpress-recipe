@@ -1,36 +1,22 @@
 <?php
 /**
- * The template for displaying all single posts
+ * The Template for displaying all single posts
  *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#single-post
- *
- * @package bigfork
+ * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  */
 
-get_header();
-?>
-    <main id="primary" class="site-main">
-        <?php
-        while (have_posts()) :
-            the_post();
+declare(strict_types=1);
 
-            get_template_part('template-parts/content', get_post_type());
+namespace App;
 
-            the_post_navigation(
-                [
-                    'prev_text' => '<span class="nav-subtitle">' . esc_html__('Previous:', 'bigfork') . '</span> <span class="nav-title">%title</span>',
-                    'next_text' => '<span class="nav-subtitle">' . esc_html__('Next:', 'bigfork') . '</span> <span class="nav-title">%title</span>',
-                ]
-            );
+use Timber\Timber;
 
-            // If comments are open or we have at least one comment, load up the comment template.
-            if (comments_open() || get_comments_number()) :
-                comments_template();
-            endif;
+$context   = Timber::context();
+$post      = $context['post'];
+$templates = [ 'templates/single-' . $post->post_type . '.twig', 'templates/single.twig' ];
 
-        endwhile; // End of the loop.
-        ?>
-    </main><!-- #main -->
-<?php
-get_sidebar();
-get_footer();
+if ( post_password_required( $post->ID ) ) {
+    $templates = 'templates/single-password.twig';
+}
+
+Timber::render( $templates, $context );

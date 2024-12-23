@@ -1,0 +1,7 @@
+<footer class="footer">
+    {% if function('is_front_page') %}
+        <p>Blank theme by <a href="https://www.bigfork.co.uk">Bigfork</a></p>
+    {% endif %}
+
+    <p>Copyright {{ 'now'|date('Y') }}</p>
+</footer>

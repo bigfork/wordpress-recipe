@@ -1,44 +1,20 @@
 <?php
 /**
- * The template for displaying search results pages
+ * Search results page
  *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#search-result
- *
- * @package bigfork
+ * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  */
 
-get_header();
-?>
-    <main id="primary" class="site-main">
-        <?php if (have_posts()) : ?>
-            <header class="page-header">
-                <h1 class="page-title">
-                    <?php
-                    /* translators: %s: search query. */
-                    printf(esc_html__('Search Results for: %s', 'bigfork'), '<span>' . get_search_query() . '</span>');
-                    ?>
-                </h1>
-            </header><!-- .page-header -->
+declare(strict_types=1);
 
-            <?php
-            /* Start the Loop */
-            while (have_posts()) :
-                the_post();
+use Timber\Timber;
 
-                /**
-                 * Run the loop for the search to output the results.
-                 * If you want to overload this in a child theme then include a file
-                 * called content-search.php and that will be used instead.
-                 */
-                get_template_part('template-parts/content', 'search');
-            endwhile;
+$templates = [ 'templates/search.twig', 'templates/archive.twig', 'templates/index.twig' ];
 
-            the_posts_navigation();
-        else :
-            get_template_part('template-parts/content', 'none');
-        endif;
-        ?>
-    </main><!-- #main -->
-<?php
-get_sidebar();
-get_footer();
+$context = Timber::context(
+    [
+        'title' => 'Search results for ' . get_search_query(),
+    ]
+);
+
+Timber::render( $templates, $context );

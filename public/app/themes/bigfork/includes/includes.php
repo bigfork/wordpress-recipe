@@ -1,6 +1,5 @@
 <?php
 
-require_once '_core/_ThemeSetup.php';
 require_once '_core/DisableFunctionality.php';
 require_once '_core/Duplicate.php';
 require_once '_core/YouTubeNoCookie.php';
@@ -17,4 +16,3 @@ require_once 'assets/Images.php';
 require_once 'assets/Requirements.php';
 
 require_once 'theme/Navigation.php';
-require_once 'theme/Pagination.php';

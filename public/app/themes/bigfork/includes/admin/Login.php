@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 add_action('login_enqueue_scripts', function () {
     ?>
     <style type="text/css">
