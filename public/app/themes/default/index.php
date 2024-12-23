@@ -9,7 +9,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
- * @package bigfork
+ * @package default
  */
 
 declare(strict_types=1);

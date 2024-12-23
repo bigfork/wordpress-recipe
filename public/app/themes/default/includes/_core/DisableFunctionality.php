@@ -101,6 +101,11 @@ add_action('wp_before_admin_bar_render', function () {
     $wp_admin_bar->remove_menu('comments');
 });
 
+add_action('admin_init', function() {
+    remove_submenu_page( 'themes.php', 'edit.php?post_type=wp_block' );
+    remove_submenu_page( 'themes.php', 'site-editor.php?path=/patterns' );
+}, 100);
+
 // Remove Meta Generator: <meta name="generator" content="WordPress x.x" />
 // and <meta name="generator" content="WooCommerce x.x.x" />
 remove_action('wp_head', 'wp_generator');
