@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html {{ site.language_attributes }}>
-{% block head %}
+<html {{ site.language_attributes }}>{% block head %}
     {% include 'partials/head.twig' %}
 {% endblock %}
 
 <body class="{{ body_class }}">
+{{ function('wp_body_open') }}
+
 <div class="viewport">
     {% block header %}
         {% include 'partials/header.twig' %}
