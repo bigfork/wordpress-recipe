@@ -4,6 +4,114 @@
  * This file is required in the root directory so WordPress can find it.
  * WP is hardcoded to look in its own directory or one directory up for wp-config.php.
  */
+
+use Spatie\Ignition\Ignition;
+
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 require_once dirname(__DIR__) . '/config/application.php';
 require_once ABSPATH . 'wp-settings.php';
+
+// Initialize Ignition if in the development environment
+if (defined('WP_ENV') && WP_ENV !== 'production' && !defined('WP_CLI')) {
+    // Initialize Ignition
+    $ignition = Ignition::make()
+        ->registerMiddleware([
+            function ($report, $next) {
+                $report->group('WordPress Info', [
+                    'Version' => get_bloginfo('version'),
+                    'Theme' => wp_get_theme()->get('Name'),
+                ]);
+                return $next($report);
+            }
+        ])
+        ->setTheme('dark')
+        ->applicationPath(dirname(__DIR__)) // Set to project root
+        ->shouldDisplayException(true);
+
+    // Register Ignition
+    $ignition->register();
+
+    ob_start();
+
+    register_shutdown_function(function () use ($ignition) {
+        $error = error_get_last();
+        if ($error !== null && in_array($error['type'], [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE])) {
+            $exception = new \ErrorException(
+                $error['message'],
+                0,
+                $error['type'],
+                $error['file'],
+                $error['line']
+            );
+
+            // Clear all previous output
+            while (ob_get_level() > 0) {
+                ob_end_clean();
+            }
+
+            // Display Ignition's error page
+            if (class_exists(Ignition::class)) {
+                $ignition->handleException($exception);
+            } else {
+                echo '<pre>';
+                print_r($exception);
+                echo '</pre>';
+            }
+
+            exit; // Stop further execution
+
+            // Flush output buffer if no error occurred
+            ob_end_flush();
+        }
+    });
+
+    set_exception_handler(function (\Throwable $e) use ($ignition) {
+        // Clear output buffer to prevent partial rendering
+        while (ob_get_level() > 0) {
+            ob_end_clean();
+        }
+
+        // Display Ignition's error page
+        if (class_exists(Ignition::class)) {
+            $ignition->handleException($e);
+        } else {
+            echo '<pre>';
+            print_r($e);
+            echo '</pre>';
+        }
+
+        exit; // Prevent further execution
+    });
+
+    add_action('wp', function () use ($ignition) {
+        add_action('template_redirect', function () use ($ignition) {
+            $error = error_get_last();
+            if ($error !== null) {
+                // Convert WordPress errors to exceptions
+                $exception = new \ErrorException(
+                    $error['message'],
+                    0,
+                    $error['type'],
+                    $error['file'],
+                    $error['line']
+                );
+
+                // Clear all output and handle with Ignition
+                while (ob_get_level() > 0) {
+                    ob_end_clean();
+                }
+
+                if (class_exists(Ignition::class)) {
+                    $ignition->handleException($exception);
+                } else {
+                    echo '<pre>';
+                    print_r($exception);
+                    echo '</pre>';
+                }
+
+                exit;
+            }
+        });
+    });
+}
+

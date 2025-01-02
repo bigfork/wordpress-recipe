@@ -30,6 +30,7 @@
 		"roots/wordpress": "^6",
 		"roots/wp-config": "^1",
 		"roots/wp-password-bcrypt": "^1",
+		"spatie/laravel-ignition": "^2.9",
 		"timber/timber": "^2",
 		"vlucas/phpdotenv": "^5",
 		"wp-media/wp-rocket": "^3",
