@@ -7,12 +7,12 @@
 ## HostWorkingDir: true
 
 if [ $1 = "watch" ]; then
-    npm --prefix public/app/themes/bigfork run watch
+    npm --prefix public/app/themes/default run watch
 elif [ $1 = "prod" ]; then
-    npm --prefix public/app/themes/bigfork run prod
+    npm --prefix public/app/themes/default run prod
 elif [ $1 = "build" ]; then
-    npm --prefix public/app/themes/bigfork run prod
+    npm --prefix public/app/themes/default run prod
 else
-    npm --prefix public/app/themes/bigfork "$@"
+    npm --prefix public/app/themes/default "$@"
 fi
 
