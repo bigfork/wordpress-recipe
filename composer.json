@@ -37,6 +37,7 @@
 		"wpackagist-plugin/acf-extended": "^0",
 		"wpackagist-plugin/customizer-disabler": "^2",
 		"wpackagist-plugin/disable-gutenberg": "^3",
+		"wpackagist-plugin/enable-media-replace":"^4",
 		"wpackagist-plugin/simple-page-ordering": "^2",
 		"wpackagist-plugin/wordfence": "^7",
 		"wpackagist-plugin/wordpress-seo": "^23",
