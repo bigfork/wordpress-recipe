@@ -7,12 +7,12 @@
 ## HostWorkingDir: true
 
 if [ $1 = "watch" ]; then
-    npm --prefix public/app/themes/default run watch
+    yarn --cwd public/app/themes/sage run dev
 elif [ $1 = "prod" ]; then
-    npm --prefix public/app/themes/default run prod
+    yarn --cwd public/app/themes/sage run build
 elif [ $1 = "build" ]; then
-    npm --prefix public/app/themes/default run prod
+    yarn --cwd public/app/themes/sage run build
 else
-    npm --prefix public/app/themes/default "$@"
+    yarn --cwd public/app/themes/sage "$@"
 fi
 

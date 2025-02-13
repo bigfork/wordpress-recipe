@@ -1,84 +1,87 @@
 {
-	"name": "bigfork/wordpress-recipe",
-	"type": "wordpress-recipe",
-	"description": "Bigfork’s Bedrock WordPress recipe",
-	"homepage": "https://www.bigfork.co.uk",
-	"license": "BSD-3-Clause",
-	"repositories": [
-		{
-			"type": "composer",
-			"url": "https://connect.advancedcustomfields.com"
-		},
-		{
-			"type": "composer",
-			"url": "https://wpackagist.org",
-			"only": [
-				"wpackagist-plugin/*",
-				"wpackagist-theme/*"
-			]
-		},
-		{
-			"type": "git",
-			"url": "https://github.com/tabrisrp/wp-background-processing"
-		}
-	],
-	"require": {
-		"composer/installers": "^2",
-		"oscarotero/env": "^2",
-		"roots/bedrock-autoloader": "^1",
-		"roots/bedrock-disallow-indexing": "^2",
-		"roots/wordpress": "^6",
-		"roots/wp-config": "^1",
-		"roots/wp-password-bcrypt": "^1",
-		"spatie/laravel-ignition": "^2.9",
-		"timber/timber": "^2",
-		"vlucas/phpdotenv": "^5",
-		"wp-media/wp-rocket": "^3",
-		"wpackagist-plugin/acf-extended": "^0",
-		"wpackagist-plugin/customizer-disabler": "^2",
-		"wpackagist-plugin/disable-gutenberg": "^3",
-		"wpackagist-plugin/enable-media-replace":"^4",
-		"wpackagist-plugin/simple-page-ordering": "^2",
-		"wpackagist-plugin/wordfence": "^7",
-		"wpackagist-plugin/wordpress-seo": "^23",
-		"wpengine/advanced-custom-fields-pro": "^6"
-	},
-	"require-dev": {
-		"squizlabs/php_codesniffer": "^3",
-		"roave/security-advisories": "dev-latest",
-		"symfony/var-dumper": "^6"
-	},
-	"config": {
-		"optimize-autoloader": true,
-		"preferred-install": "dist",
-		"sort-packages": true,
-		"allow-plugins": {
-			"composer/installers": true,
-			"roots/wordpress-core-installer": true
-		}
-	},
-	"minimum-stability": "dev",
-	"prefer-stable": true,
-	"extra": {
-		"installer-paths": {
-			"public/app/mu-plugins/{$name}/": [
-				"type:wordpress-muplugin"
-			],
-			"public/app/plugins/{$name}/": [
-				"type:wordpress-plugin"
-			],
-			"public/app/themes/{$name}/": [
-				"type:wordpress-theme"
-			]
-		},
-		"wordpress-install-dir": "public/wp"
-	},
-	"autoload": {
-		"psr-4": {
-			"Bigfork\\": "util/Bigfork"
-		}
-	},
-	"scripts": {
-		"post-create-project-cmd": "Bigfork\\Installer\\Install::postCreateProject"
-	}
+  "name": "bigfork/wordpress-recipe",
+  "type": "wordpress-recipe",
+  "description": "Bigfork\u2019s Bedrock WordPress recipe",
+  "homepage": "https://www.bigfork.co.uk",
+  "license": "BSD-3-Clause",
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://connect.advancedcustomfields.com"
+    },
+    {
+      "type": "composer",
+      "url": "https://wpackagist.org",
+      "only": [
+        "wpackagist-plugin/*",
+        "wpackagist-theme/*"
+      ]
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/tabrisrp/wp-background-processing"
+    }
+  ],
+  "require": {
+    "composer/installers": "^2",
+    "oscarotero/env": "^2",
+    "roots/acorn": "*",
+    "roots/bedrock-autoloader": "^1",
+    "roots/bedrock-disallow-indexing": "^2",
+    "roots/wordpress": "^6",
+    "roots/wp-config": "^1",
+    "roots/wp-password-bcrypt": "^1",
+    "spatie/laravel-ignition": "^2",
+    "vlucas/phpdotenv": "^5",
+    "wp-media/wp-rocket": "^3",
+    "wpackagist-plugin/acf-extended": "^0",
+    "wpackagist-plugin/customizer-disabler": "^2",
+    "wpackagist-plugin/disable-gutenberg": "^3",
+    "wpackagist-plugin/enable-media-replace": "^4",
+    "wpackagist-plugin/simple-page-ordering": "^2",
+    "wpackagist-plugin/wordfence": "^7",
+    "wpackagist-plugin/wordpress-seo": "^23",
+    "wpengine/advanced-custom-fields-pro": "^6"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^3",
+    "roave/security-advisories": "dev-latest",
+    "symfony/var-dumper": "^7"
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "allow-plugins": {
+      "composer/installers": true,
+      "roots/wordpress-core-installer": true
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "installer-paths": {
+      "public/app/mu-plugins/{$name}/": [
+        "type:wordpress-muplugin"
+      ],
+      "public/app/plugins/{$name}/": [
+        "type:wordpress-plugin"
+      ],
+      "public/app/themes/{$name}/": [
+        "type:wordpress-theme"
+      ]
+    },
+    "wordpress-install-dir": "public/wp"
+  },
+  "autoload": {
+    "psr-4": {
+      "Bigfork\\": "util/Bigfork"
+    }
+  },
+  "scripts": {
+    "post-create-project-cmd": "Bigfork\\Installer\\Install::postCreateProject",
+    "post-autoload-dump": [
+      "Roots\\Acorn\\ComposerScripts::postAutoloadDump"
+    ]
+  }
 }
