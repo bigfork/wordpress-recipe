@@ -5,7 +5,7 @@ import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 import VitePluginSvgSpritemap from '@spiriit/vite-plugin-svg-spritemap';
 
 export default defineConfig({
-  base: '/app/themes/onyx/public/build/',
+  base: '/app/themes/sage/public/build/',
   plugins: [
     laravel({
       input: [
