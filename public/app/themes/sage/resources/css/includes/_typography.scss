@@ -1,0 +1,200 @@
+/* Typography setup
+---------------------------------------------------------------------------------- */
+
+@use 'mixins';
+@use 'variables';
+
+/* Set base font size / family
+---------------------------------------------------------------------------------- */
+html {
+  font-size: 62.5%;
+}
+
+body {
+  color: var(--black);
+  font: 400 1.6rem / 1.5 var(--font-family);
+}
+
+/* Webfonts (if applicable)
+---------------------------------------------------------------------------------- */
+
+/* Default margins
+---------------------------------------------------------------------------------- */
+:where(h1, h2, h3, h4, h5, h6, p, ul, ol, blockquote) {
+  margin-bottom: 1.25em;
+
+  &:where(:last-child) {
+    margin-bottom: 0;
+  }
+}
+
+/* Headings
+---------------------------------------------------------------------------------- */
+:where(h1, .h1) {
+  font-size: 3.2rem;
+  line-height: 1.1;
+  margin-bottom: 0.5em;
+
+  &:where(:last-child) {
+    margin-bottom: 0;
+  }
+}
+
+:where(h2, .h2) {
+  font-size: 2.8rem;
+  line-height: 1.2;
+  margin-bottom: 0.5em;
+
+  &:where(:last-child) {
+    margin-bottom: 0;
+  }
+}
+
+:where(h3, .h3) {
+  font-size: 2.4rem;
+  line-height: 1.2;
+  margin-bottom: 0.75em;
+
+  &:where(:last-child) {
+    margin-bottom: 0;
+  }
+}
+
+:where(h4, .h4) {
+  font-size: 2.4rem;
+  line-height: 1.4;
+  margin-bottom: 0.75em;
+
+  &:where(:last-child) {
+    margin-bottom: 0;
+  }
+}
+
+:where(h5, .h5) {
+  font-size: 2rem;
+  line-height: 1.5;
+  margin-bottom: 1em;
+
+  &:where(:last-child) {
+    margin-bottom: 0;
+  }
+}
+
+:where(h6, .h6) {
+  font-size: 1.8rem;
+  line-height: 1.5;
+  margin-bottom: 1em;
+
+  &:where(:last-child) {
+    margin-bottom: 0;
+  }
+}
+
+/* Font weights/styles
+---------------------------------------------------------------------------------- */
+:where(strong) {
+  font-weight: 500;
+}
+
+:where(em) {
+  font-style: italic;
+}
+
+/* List styles
+---------------------------------------------------------------------------------- */
+:where(ul) {
+  padding-left: 1em;
+  list-style-type: disc;
+}
+
+:where(ol) {
+  padding-left: 1em;
+  list-style-type: decimal;
+}
+
+/* Anchors
+---------------------------------------------------------------------------------- */
+:where(a) {
+  color: currentColor;
+}
+
+:where(a:link),
+:where(a:visited) {
+  text-decoration: underline;
+}
+
+:where(a:hover),
+:where(a:active) {
+  text-decoration: none;
+}
+
+/* Figures
+---------------------------------------------------------------------------------- */
+:where(figure) {
+  max-width: 100%;
+  margin: 1.5em 0 2.5em;
+
+  :where(figcaption) {
+    margin-top: 1em;
+    padding-left: 1em;
+    border-left: solid 1px color-mix(in srgb, currentColor 75%, transparent);
+    font-size: 90%;
+    opacity: 0.5;
+  }
+}
+
+/* Alignments
+---------------------------------------------------------------------------------- */
+:where(.aligncenter) {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (min-width: 768px) {
+  :where(.alignleft) {
+    float: left;
+    margin-right: 1em;
+  }
+
+  :where(.alignright) {
+    float: right;
+    margin-left: 1em;
+  }
+}
+
+/* Tables
+---------------------------------------------------------------------------------- */
+:where(table) {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+:where(table td, table th) {
+  padding: 0.75em 1em;
+  border-style: solid;
+  border-color: color-mix(in srgb, currentColor 25%, transparent);
+  border-width: 0 1px 1px 0;
+}
+
+:where(table td:first-child, table th:first-child) {
+  border-left-width: 1px;
+}
+
+:where(table tr:first-child td, table tr:first-child th) {
+  border-top-width: 1px;
+}
+
+:where(table thead + tbody tr:first-child td, table thead + tbody tr:first-child th) {
+  border-top-width: 0;
+}
+
+:where(table thead tr:only-child td, table thead tr:only-child th) {
+  border-bottom-width: 5px;
+}
+
+/* Monospace font variant
+---------------------------------------------------------------------------------- */
+:where(pre),
+:where(code) {
+  font-family: monospace;
+}

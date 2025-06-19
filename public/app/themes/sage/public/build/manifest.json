@@ -1,0 +1,52 @@
+{
+  "editor.deps.json": {
+    "file": "assets/editor.deps-BqrDAOEV.json",
+    "src": "editor.deps.json"
+  },
+  "resources/css/admin.scss": {
+    "file": "assets/admin-l0sNRNKZ.js",
+    "name": "admin",
+    "src": "resources/css/admin.scss",
+    "isEntry": true
+  },
+  "resources/css/app.scss": {
+    "file": "assets/app-DP2rzg_V.js",
+    "name": "app",
+    "src": "resources/css/app.scss",
+    "isEntry": true
+  },
+  "resources/css/editor.scss": {
+    "file": "assets/editor-l0sNRNKZ.js",
+    "name": "editor",
+    "src": "resources/css/editor.scss",
+    "isEntry": true
+  },
+  "resources/css/wysiwyg.scss": {
+    "file": "assets/wysiwyg-l0sNRNKZ.js",
+    "name": "wysiwyg",
+    "src": "resources/css/wysiwyg.scss",
+    "isEntry": true
+  },
+  "resources/js/admin.js": {
+    "file": "assets/admin-DP2rzg_V.js",
+    "name": "admin",
+    "src": "resources/js/admin.js",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-l0sNRNKZ.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  },
+  "resources/js/editor.js": {
+    "file": "assets/editor-DP2rzg_V.js",
+    "name": "editor",
+    "src": "resources/js/editor.js",
+    "isEntry": true
+  },
+  "spritemap.svg": {
+    "file": "assets/spritemap.03e6c3bd.svg",
+    "src": "spritemap.svg"
+  }
+}

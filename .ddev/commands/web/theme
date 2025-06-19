@@ -12,6 +12,9 @@ elif [ $1 = "prod" ]; then
     yarn --cwd public/app/themes/sage run build
 elif [ $1 = "build" ]; then
     yarn --cwd public/app/themes/sage run build
+elif [ $1 = "install" ]; then
+    yarn --cwd public/app/themes/sage install
+    composer install -d public/app/themes/sage
 else
     yarn --cwd public/app/themes/sage "$@"
 fi

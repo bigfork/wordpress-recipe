@@ -1,5 +1,7 @@
 <?php
 
+use Roots\Acorn\Application;
+
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader
@@ -29,18 +31,11 @@ require $composer;
 |
 */
 
-if (! function_exists('\Roots\bootloader')) {
-    wp_die(
-        __('You need to install Acorn to use this theme.', 'sage'),
-        '',
-        [
-            'link_url' => 'https://roots.io/acorn/docs/installation/',
-            'link_text' => __('Acorn Docs: Installation', 'sage'),
-        ]
-    );
-}
-
-\Roots\bootloader()->boot();
+Application::configure()
+    ->withProviders([
+        App\Providers\ThemeServiceProvider::class,
+    ])
+    ->boot();
 
 /*
 |--------------------------------------------------------------------------
@@ -54,16 +49,15 @@ if (! function_exists('\Roots\bootloader')) {
 |
 */
 
-collect(['setup', 'filters'])
-    ->each(function ($file) {
-        if (! locate_template($file = "app/{$file}.php", true, true)) {
-            wp_die(
-                /* translators: %s is replaced with the relative file path */
-                sprintf(__('Error locating <code>%s</code> for inclusion.', 'sage'), $file)
-            );
-        }
-    });
-
-add_action( 'slim_seo_init', function( $plugin ) {
-    $plugin->disable( 'code' );
-} );
+collect([
+    'setup',
+    'filters',
+    'slim-seo',
+])->each(function ($file) {
+    if (! locate_template($file = "app/{$file}.php", true, true)) {
+        wp_die(
+        /* translators: %s is replaced with the relative file path */
+            sprintf(__('Error locating <code>%s</code> for inclusion.', 'sage'), $file)
+        );
+    }
+});

@@ -1,0 +1,10 @@
+/* For CMS WYSIWYG editor
+---------------------------------------------------------------------------------- */
+
+@use 'includes/normalize';
+@use 'includes/variables';
+@use 'includes/typography';
+
+.content {
+  padding: 0.5em !important;
+}

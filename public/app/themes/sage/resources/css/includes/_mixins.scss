@@ -1,0 +1,33 @@
+/* Mixins
+---------------------------------------------------------------------------------- */
+
+@use 'sass:list';
+@use 'sass:math';
+
+/* Fluid font-size mixin
+ *
+ * Usage example:
+ * font-size: #{fluidFontSize((1.2rem, 320px), (3rem, 960px))};
+ *
+ * Will result in font size of 1.2rem @ 320px, which will grow in sync with the
+ * viewport width. It will reach 3rem @ 960px
+---------------------------------------------------------------------------------- */
+@function fluidFontSize($min, $max, $useContainerWidth: false) {
+  $minFontSize: list.nth($min, 1);
+  $minWidth: list.nth($min, 2);
+  $maxFontSize: list.nth($max, 1);
+  $maxWidth: list.nth($max, 2);
+
+  $slope: math.div((stripUnits($maxFontSize * 10) - stripUnits($minFontSize * 10)), (stripUnits($maxWidth) - stripUnits($minWidth)));
+  $slopeVw: #{$slope * 100}#{if($useContainerWidth, 'cqi', 'vi')};
+  $intercept: math.div((stripUnits($minFontSize * 10) - ($slope * stripUnits($minWidth))), 10);
+
+  $preferred: "#{$slopeVw} + #{$intercept}rem";
+  @return clamp(#{$minFontSize}, #{$preferred}, #{$maxFontSize});
+}
+
+/* Strip 'px', 'rem' etc units from a number
+---------------------------------------------------------------------------------- */
+@function stripUnits($number) {
+  @return math.div($number, $number * 0 + 1);
+}
