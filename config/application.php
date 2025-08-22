@@ -66,6 +66,10 @@ if (!env('WP_ENVIRONMENT_TYPE') && in_array(WP_ENV, ['production', 'staging', 'd
 Config::define('WP_HOME', env('WP_HOME'));
 Config::define('WP_SITEURL', env('WP_SITEURL'));
 
+/**
+ * ACF Configuration
+ */
+Config::define('ACF_PRO_LICENSE', env('ACF_PRO_LICENSE') ?: '');
 
 /**
  * WP Rocket Configuration
