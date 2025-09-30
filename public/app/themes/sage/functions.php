@@ -51,9 +51,11 @@ Application::configure()
 
 collect([
     'setup',
+    'disable-features',
     'filters',
     'gravity-forms',
     'slim-seo',
+    'wp-rocket',
 ])->each(function ($file) {
     if (! locate_template($file = "app/{$file}.php", true, true)) {
         wp_die(
