@@ -12,7 +12,7 @@ require_once dirname(__DIR__) . '/config/application.php';
 require_once ABSPATH . 'wp-settings.php';
 
 // Initialize Ignition if in the development environment
-if (defined('WP_ENV') && WP_ENV !== 'production' && !defined('WP_CLI')) {
+if (class_exists(Ignition::class) && defined('WP_ENV') && WP_ENV !== 'production' && !defined('WP_CLI')) {
     // Initialize Ignition
     $ignition = Ignition::make()
         ->registerMiddleware([
