@@ -6,7 +6,6 @@
 
 namespace App;
 
-use function Roots\bundle;
 use Illuminate\Support\Facades\Vite;
 
 /**
