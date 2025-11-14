@@ -160,3 +160,13 @@ add_action('widgets_init', function () {
         'id' => 'sidebar-footer',
     ] + $config);
 });
+
+/**
+ * Generate dynamic robots.txt
+ */
+add_action('do_robots', function () {
+    $site_url = home_url();
+
+    echo "Disallow: /cdn-cgi/\n";
+    echo "Disallow: /?s=\n";
+});
