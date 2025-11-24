@@ -1,18 +1,13 @@
-# BEGIN WordPress
-# The directives (lines) between "BEGIN WordPress" and "END WordPress" are
-# dynamically generated, and should only be modified via WordPress filters.
-# Any changes to the directives between these markers will be overwritten.
-<IfModule mod_rewrite.c>
-RewriteEngine On
-RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
-RewriteBase /
-RewriteRule ^index\.php$ - [L]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /index.php [L]
-</IfModule>
+# ######################################################################
+# # WORDPRESS                                                          #
+# ######################################################################
 
-# END WordPress
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# WordPress rewrites are at the bottom of the file, as they have to
+# be processed after our other rewrites. Plugins will probably
+# make a mess of this file anyway, but at least we start off clean
+
 
 # ######################################################################
 # # SECURITY                                                           #
@@ -417,3 +412,19 @@ FileETag None
     ExpiresByType application/xml                       "access"
     ExpiresByType text/xml                              "access"
 </IfModule>
+
+# BEGIN WordPress
+# The directives (lines) between "BEGIN WordPress" and "END WordPress" are
+# dynamically generated, and should only be modified via WordPress filters.
+# Any changes to the directives between these markers will be overwritten.
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+
+# END WordPress
