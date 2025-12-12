@@ -40,7 +40,6 @@
     "wpackagist-plugin/disable-gutenberg": "^3",
     "wpackagist-plugin/disable-search": "^2.1",
     "wpackagist-plugin/duplicate-post": "^4.5",
-    "wpackagist-plugin/enable-media-replace": "^4",
     "wpackagist-plugin/simple-page-ordering": "^2",
     "wpackagist-plugin/slim-seo": "^4",
     "wpackagist-plugin/wordfence": "^8",
