@@ -6,84 +6,207 @@
 
 /* Set base font size / family
 ---------------------------------------------------------------------------------- */
+:root {
+  --font-body: 'arial', sans-serif;
+}
+
 html {
   font-size: 62.5%;
 }
 
 body {
   color: var(--black);
-  font: 400 1.6rem / 1.5 var(--font-family);
+  font: var(--font-rg);
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Webfonts (if applicable)
+/* Set up webfonts (if applicable)
 ---------------------------------------------------------------------------------- */
 
-/* Default margins
+/* Font sizes/gutters
 ---------------------------------------------------------------------------------- */
-:where(h1, h2, h3, h4, h5, h6, p, ul, ol, blockquote) {
-  margin-bottom: 1.25em;
 
-  &:where(:last-child) {
-    margin-bottom: 0;
+// Setup for font sizes. These are mostly consistent, some blocks may have variations
+// (and therefore overriding these variables) either on desktop, mobile, or both.
+
+// Example font sizes (base these on most common sizes across designs):
+// 16px mobile / 16px desktop - sm
+// 18px mobile / 18px desktop - rg
+// 24px mobile / 28px desktop - md
+// 28px mobile / 34px desktop - lg
+// 36px mobile / 42px desktop - xl
+// 52px mobile / 66px desktop - xxl
+
+:root {
+  --font-sm: 400 1.6rem / 1.3 var(--font-body);
+  --font-sm-gutter: 1em 0 1.75em;
+  --font-rg: 400 1.8rem / 1.3 var(--font-body);
+  --font-rg-gutter: 1em 0 1.75em;
+  --font-md: 400 2.4rem / 1.3 var(--font-body);
+  --font-md-gutter: 0.75em 0 1.25em;
+  --font-lg: 700 2.8rem / 1 var(--font-body);
+  --font-lg-gutter: 0.75em 0;
+  --font-xl: 700 3.6rem / 1 var(--font-body);
+  --font-xl-gutter: 0.75em 0 0.5em;
+  --font-xxl: 700 5.2rem / 1 var(--font-body);
+  --font-xxl-gutter: 0.75em 0 0.5em;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --font-md: 400 2.8rem / 1.3 var(--font-body);
+    --font-lg: 700 3.4rem / 1 var(--font-body);
+    --font-xl: 700 4.2rem / 1 var(--font-body);
+    --font-xxl: 700 6.6rem / 1 var(--font-body);
   }
 }
 
-/* Headings
+/* Default sizes/margins
 ---------------------------------------------------------------------------------- */
-:where(h1, .h1) {
-  font-size: 3.2rem;
-  line-height: 1.1;
-  margin-bottom: 0.5em;
+:where(h1) {
+  margin: var(--font-xxl-gutter);
+  font: var(--font-xxl);
+  text-wrap: pretty;
+
+  &:where(:first-child) {
+    margin-top: 0;
+  }
 
   &:where(:last-child) {
     margin-bottom: 0;
   }
 }
 
-:where(h2, .h2) {
-  font-size: 2.8rem;
-  line-height: 1.2;
-  margin-bottom: 0.5em;
+:where(h2) {
+  margin: var(--font-xl-gutter);
+  font: var(--font-xl);
+  text-wrap: pretty;
+
+  &:where(:first-child) {
+    margin-top: 0;
+  }
 
   &:where(:last-child) {
     margin-bottom: 0;
   }
 }
 
-:where(h3, .h3) {
-  font-size: 2.4rem;
-  line-height: 1.2;
-  margin-bottom: 0.75em;
+:where(h3) {
+  margin: var(--font-lg-gutter);
+  font: var(--font-lg);
+  text-wrap: pretty;
+
+  &:where(:first-child) {
+    margin-top: 0;
+  }
 
   &:where(:last-child) {
     margin-bottom: 0;
   }
 }
 
-:where(h4, .h4) {
-  font-size: 2.4rem;
-  line-height: 1.4;
-  margin-bottom: 0.75em;
+:where(h3) {
+  margin: var(--font-md-gutter);
+  font: var(--font-md);
+
+  &:where(:first-child) {
+    margin-top: 0;
+  }
 
   &:where(:last-child) {
     margin-bottom: 0;
   }
 }
 
-:where(h5, .h5) {
-  font-size: 2rem;
-  line-height: 1.5;
-  margin-bottom: 1em;
+:where(h5, h6, p, ul, ol, blockquote) {
+  margin: var(--font-rg-gutter);
+
+  &:where(:first-child) {
+    margin-top: 0;
+  }
 
   &:where(:last-child) {
     margin-bottom: 0;
   }
 }
 
-:where(h6, .h6) {
-  font-size: 1.8rem;
-  line-height: 1.5;
-  margin-bottom: 1em;
+/* Utility classes to apply font sizing
+---------------------------------------------------------------------------------- */
+:where(.font-sm) {
+  margin: var(--font-sm-gutter);
+  font: var(--font-sm);
+
+  &:where(:first-child) {
+    margin-top: 0;
+  }
+
+  &:where(:last-child) {
+    margin-bottom: 0;
+  }
+}
+
+:where(.font-rg) {
+  margin: var(--font-rg-gutter);
+  font: var(--font-rg);
+
+  &:where(:first-child) {
+    margin-top: 0;
+  }
+
+  &:where(:last-child) {
+    margin-bottom: 0;
+  }
+}
+
+:where(.font-md) {
+  margin: var(--font-md-gutter);
+  font: var(--font-md);
+
+  &:where(:first-child) {
+    margin-top: 0;
+  }
+
+  &:where(:last-child) {
+    margin-bottom: 0;
+  }
+}
+
+:where(.font-lg) {
+  margin: var(--font-lg-gutter);
+  font: var(--font-lg);
+  text-wrap: pretty;
+
+  &:where(:first-child) {
+    margin-top: 0;
+  }
+
+  &:where(:last-child) {
+    margin-bottom: 0;
+  }
+}
+
+:where(.font-xl) {
+  margin: var(--font-xl-gutter);
+  font: var(--font-xl);
+  text-wrap: pretty;
+
+  &:where(:first-child) {
+    margin-top: 0;
+  }
+
+  &:where(:last-child) {
+    margin-bottom: 0;
+  }
+}
+
+:where(.font-xxl) {
+  margin: var(--font-xxl-gutter);
+  font: var(--font-xxl);
+  text-wrap: pretty;
+
+  &:where(:first-child) {
+    margin-top: 0;
+  }
 
   &:where(:last-child) {
     margin-bottom: 0;
@@ -93,7 +216,7 @@ body {
 /* Font weights/styles
 ---------------------------------------------------------------------------------- */
 :where(strong) {
-  font-weight: 500;
+  font-weight: 700;
 }
 
 :where(em) {
@@ -105,6 +228,14 @@ body {
 :where(ul) {
   padding-left: 1em;
   list-style-type: disc;
+}
+
+:where(ul li) {
+  margin-top: 0.75em;
+
+  &:first-child {
+    margin-top: 0;
+  }
 }
 
 :where(ol) {
