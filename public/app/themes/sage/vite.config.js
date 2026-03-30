@@ -22,11 +22,7 @@ export default defineConfig({
 
     wordpressPlugin(),
 
-    wordpressThemeJson({
-      disableTailwindColors: true,
-      disableTailwindFonts: true,
-      disableTailwindFontSizes: true,
-    }),
+    wordpressThemeJson(),
 
     VitePluginSvgSpritemap('resources/images/icons/*.svg', {
       gutter: 10,
