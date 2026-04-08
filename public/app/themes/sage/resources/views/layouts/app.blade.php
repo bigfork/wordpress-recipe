@@ -8,7 +8,7 @@
 
     @vite(['resources/css/app.scss', 'resources/js/app.js'])
     @if (Vite::isRunningHot())
-      @vite(['@vite-plugin-svg-spritemap/client__spritemap'])
+      @vite(['@vite-plugin-svg-spritemap/client'])
     @endif
   </head>
 
