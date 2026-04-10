@@ -1,7 +1,7 @@
 {
   "name": "bigfork/wordpress-recipe",
   "type": "wordpress-recipe",
-  "description": "Bigfork\u2019s Bedrock WordPress recipe",
+  "description": "Bigfork’s Bedrock WordPress recipe",
   "homepage": "https://www.bigfork.co.uk",
   "license": "BSD-3-Clause",
   "repositories": [
@@ -10,16 +10,9 @@
       "url": "https://connect.advancedcustomfields.com"
     },
     {
+      "name": "wp-packages",
       "type": "composer",
-      "url": "https://wpackagist.org",
-      "only": [
-        "wpackagist-plugin/*",
-        "wpackagist-theme/*"
-      ]
-    },
-    {
-      "type": "git",
-      "url": "https://github.com/tabrisrp/wp-background-processing"
+      "url": "https://repo.wp-packages.org"
     }
   ],
   "require": {
@@ -34,15 +27,15 @@
     "vlucas/phpdotenv": "^5",
     "wp-media/wp-rocket": "^3",
     "wp-media/wp-rocket-cli": "^1",
-    "wpackagist-plugin/acf-extended": "^0",
-    "wpackagist-plugin/acf-image-aspect-ratio-crop": "^6",
-    "wpackagist-plugin/customizer-disabler": "^2",
-    "wpackagist-plugin/disable-gutenberg": "^3",
-    "wpackagist-plugin/disable-search": "^2.1",
-    "wpackagist-plugin/duplicate-post": "^4.5",
-    "wpackagist-plugin/simple-page-ordering": "^2",
-    "wpackagist-plugin/slim-seo": "^4",
-    "wpackagist-plugin/wordfence": "^8",
+    "wp-plugin/acf-extended": "^0",
+    "wp-plugin/acf-image-aspect-ratio-crop": "^6",
+    "wp-plugin/customizer-disabler": "^2",
+    "wp-plugin/disable-gutenberg": "^3",
+    "wp-plugin/disable-search": "^2",
+    "wp-plugin/duplicate-post": "^4",
+    "wp-plugin/simple-page-ordering": "^2",
+    "wp-plugin/slim-seo": "^4",
+    "wp-plugin/wordfence": "^8",
     "wpengine/advanced-custom-fields-pro": "^6"
   },
   "require-dev": {
