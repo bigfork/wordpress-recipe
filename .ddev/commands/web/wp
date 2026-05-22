@@ -1,4 +1,5 @@
 #!/bin/bash
+#ddev-silent-no-warn
 
 ## Description: Run WordPress CLI inside the web container
 ## Usage: wp [flags] [args]
