@@ -18,6 +18,10 @@ export default defineConfig({
         'resources/css/wysiwyg.scss',
       ],
       refresh: true,
+      assets: [
+        'resources/images/**',
+        'resources/fonts/**',
+      ],
     }),
 
     wordpressPlugin(),
