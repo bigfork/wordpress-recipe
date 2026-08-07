@@ -54,6 +54,7 @@ collect([
     'disable-features',
     'filters',
     'gravity-forms',
+    'query-monitor',
     'slim-seo',
     'wp-rocket',
 ])->each(function ($file) {

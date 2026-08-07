@@ -22,6 +22,7 @@ public/app/upgrade
 public/app/uploads/*
 !public/app/uploads/.gitkeep
 public/app/cache/*
+/public/app/db.php
 
 # WordPress
 public/wp

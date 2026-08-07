@@ -39,9 +39,10 @@
     "wpengine/advanced-custom-fields-pro": "^6"
   },
   "require-dev": {
-    "squizlabs/php_codesniffer": "^3",
     "roave/security-advisories": "dev-latest",
-    "symfony/var-dumper": "^7"
+    "squizlabs/php_codesniffer": "^3",
+    "symfony/var-dumper": "^7",
+    "wp-plugin/query-monitor": "^4.0"
   },
   "config": {
     "optimize-autoloader": true,
@@ -57,7 +58,8 @@
   "extra": {
     "installer-paths": {
       "public/app/mu-plugins/{$name}/": [
-        "type:wordpress-muplugin"
+        "type:wordpress-muplugin",
+	  	"wp-plugin/query-monitor"
       ],
       "public/app/plugins/{$name}/": [
         "type:wordpress-plugin"
