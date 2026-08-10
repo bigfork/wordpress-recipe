@@ -11,6 +11,11 @@
 # directly since Bedrock's dotenv supports ${VAR} expansion (e.g. DDEV's WP_HOME="https://${DDEV_HOSTNAME}").
 # The request is aimed at 127.0.0.1 via --resolve so it never depends on public DNS.
 #
+# Requests can 404 with "No input file specified" for a few seconds right after activation: the
+# long-lived FPM workers keep their own realpath cache of where the `current` symlink points, and
+# don't necessarily re-check it on every request, so a worker can keep resolving into the release
+# this deploy just replaced. We retry briefly rather than fail outright on that.
+#
 # Run from Envoyer once the new release has been activated:
 #
 #     cd {{ release }}
@@ -45,24 +50,26 @@ PHP
 # -k: we're hitting 127.0.0.1 directly, bypassing anything in front of the site (Cloudflare,
 # etc.), so the cert Apache presents locally often won't validate for this hostname. That's fine
 # here — the token in the URL is what pins this request to our own file, not TLS.
-set +e
-STATUS=$(curl -sk -o /tmp/opcache-clear-response.$$ -w '%{http_code}' \
-    --resolve "${HOST}:${PORT}:127.0.0.1" \
-    "${SCHEME}://${HOST}/opcache-clear-${TOKEN}.php")
-CURL_EXIT=$?
-set -e
+URL="${SCHEME}://${HOST}/opcache-clear-${TOKEN}.php"
+ATTEMPTS=5
+for i in $(seq 1 "$ATTEMPTS"); do
+    set +e
+    STATUS=$(curl -sk -o /tmp/opcache-clear-response.$$ -w '%{http_code}' \
+        --resolve "${HOST}:${PORT}:127.0.0.1" "$URL")
+    CURL_EXIT=$?
+    set -e
 
-RESPONSE=$(cat /tmp/opcache-clear-response.$$ 2>/dev/null || true)
-rm -f /tmp/opcache-clear-response.$$
+    RESPONSE=$(cat /tmp/opcache-clear-response.$$ 2>/dev/null || true)
+    rm -f /tmp/opcache-clear-response.$$
 
-if [ "$CURL_EXIT" -ne 0 ]; then
-    echo "OPcache clear request failed: curl exited ${CURL_EXIT}" >&2
-    exit 1
-fi
+    if [ "$CURL_EXIT" -eq 0 ] && [ "$STATUS" = "200" ]; then
+        echo "OPcache cleared on ${HOST}: ${RESPONSE}"
+        exit 0
+    fi
 
-if [ "$STATUS" != "200" ]; then
-    echo "OPcache clear request failed (HTTP ${STATUS}): ${RESPONSE}" >&2
-    exit 1
-fi
+    echo "Attempt ${i}/${ATTEMPTS} failed (curl exit ${CURL_EXIT}, HTTP ${STATUS}): ${RESPONSE}" >&2
+    [ "$i" -lt "$ATTEMPTS" ] && sleep 2
+done
 
-echo "OPcache cleared on ${HOST}: ${RESPONSE}"
+echo "OPcache clear request failed after ${ATTEMPTS} attempts" >&2
+exit 1
