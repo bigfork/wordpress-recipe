@@ -138,6 +138,30 @@ Config::define('DISALLOW_FILE_MODS', false);
 Config::define('WP_POST_REVISIONS', env('WP_POST_REVISIONS') ?? true);
 
 /**
+ * Redis (Object Cache Pro)
+ */
+Config::define('WP_REDIS_CONFIG', [
+    'token' => env('WP_REDIS_TOKEN') ?: null,
+    'host' => env('WP_REDIS_HOST') ?: '127.0.0.1',
+    'port' => env('WP_REDIS_PORT') ?: 6379,
+    'username' => env('WP_REDIS_USERNAME') ?: null,
+    'password' => env('WP_REDIS_PASSWORD') ?: null,
+    'database' => env('WP_REDIS_DATABASE') ?? 0, // change for each site
+    'timeout' => 2.5,
+    'read_timeout' => 2.5,
+    'split_alloptions' => true,
+    'async_flush' => true,
+    'client' => 'phpredis',
+    'compression' => 'zstd',
+    'serializer' => 'igbinary',
+    'prefetch' => true,
+    'debug' => false,
+    'save_commands' => false,
+    'prefix' => env('WP_REDIS_PREFIX') ?: null,
+]);
+Config::define('WP_REDIS_DISABLED', env('WP_REDIS_DISABLED') ?? false);
+
+/**
  * Debugging Settings
  */
 Config::define('WP_DEBUG_DISPLAY', false);
