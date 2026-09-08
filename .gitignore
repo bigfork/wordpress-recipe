@@ -14,6 +14,9 @@ _resampled
 /vendor
 
 # Application
+public/app/advanced-cache.php
+public/app/db.php
+public/app/cache/*
 public/app/plugins/*
 !public/app/plugins/.gitkeep
 public/app/mu-plugins/*/
@@ -21,8 +24,7 @@ public/app/themes/twenty*/
 public/app/upgrade
 public/app/uploads/*
 !public/app/uploads/.gitkeep
-public/app/cache/*
-/public/app/db.php
+public/app/wflogs/*
 
 # WordPress
 public/wp
