@@ -19,6 +19,7 @@ if (!function_exists('rocket_clean_domain')) {
     return;
 }
 
+rocket_init_cache_dir();
 rocket_generate_advanced_cache_file();
 rocket_generate_config_file();
 
