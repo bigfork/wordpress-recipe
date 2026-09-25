@@ -16,6 +16,7 @@
     }
   ],
   "require": {
+    "bigfork/wp-html-sitemap": "^1.0",
     "composer/installers": "^2",
     "oscarotero/env": "^2",
     "roots/acorn": "*",
