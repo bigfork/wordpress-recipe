@@ -104,9 +104,25 @@ add_action('init', function () use ($login_slug) {
 // bake a query string directly into that path, eg. 'wp-login.php?action=logout', rather
 // than appending one afterwards. Matching only the exact 'wp-login.php' string missed all
 // of those, leaving them pointing at the real, blocked wp-login.php and 404ing when used.
-add_filter('site_url', function ($url, $path) use ($login_slug) {
-    if ($path === 'wp-login.php' || str_starts_with($path, 'wp-login.php?')) {
+$is_login_path = static fn (string $path): bool => $path === 'wp-login.php' || str_starts_with($path, 'wp-login.php?');
+
+add_filter('site_url', function ($url, $path) use ($login_slug, $is_login_path) {
+    if ($is_login_path((string) $path)) {
         return home_url('/' . $login_slug . substr($path, strlen('wp-login.php')));
+    }
+
+    return $url;
+}, 10, 2);
+
+// On multisite, wp_lostpassword_url(), the lostpassword/resetpass form actions and
+// retrieve_password() emails build off network_site_url() instead, which never runs
+// through the site_url filter above. The path also arrives prefixed with the site's own
+// path, eg. '/wp-login.php'.
+add_filter('network_site_url', function ($url, $path) use ($login_slug, $is_login_path) {
+    $path = ltrim((string) $path, '/');
+
+    if ($is_login_path($path)) {
+        return network_home_url('/' . $login_slug . substr($path, strlen('wp-login.php')));
     }
 
     return $url;
