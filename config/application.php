@@ -137,6 +137,9 @@ Config::define('DISALLOW_FILE_MODS', false);
 // Limit the number of post revisions
 Config::define('WP_POST_REVISIONS', env('WP_POST_REVISIONS') ?? true);
 
+// Theme activated on a fresh install - the create-project installer swaps this to the project slug
+Config::define('WP_DEFAULT_THEME', 'sage');
+
 /**
  * Redis (Object Cache Pro)
  */

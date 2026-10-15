@@ -1,7 +1,11 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Bigfork\Installer;
 
 use Composer\Script\Event;
+
 require 'vendor/autoload.php';
 
 /**
@@ -9,21 +13,22 @@ require 'vendor/autoload.php';
  */
 class Install
 {
-    /**
-     * @var string
-     */
-    private static $basePath = '';
+    private const string RECIPE_NAME = 'wordpress-recipe';
+    private const string RECIPE_THEME = 'sage';
+    private const string THEMES_PATH = '/public/app/themes/';
+    private const string THEME_COMMAND_PATH = '/.ddev/commands/web/theme';
+    private const string APPLICATION_CONFIG_PATH = '/config/application.php';
+
+    private static string $basePath = '';
 
     /**
      * Get the document root for this project. Attempts getcwd(), falls back to
      * directory traversal.
-     *
-     * @return string
      */
-    public static function getBasepath()
+    public static function getBasepath(): string
     {
         if (!self::$basePath) {
-            $candidate = getcwd() ?: dirname(dirname(dirname(dirname(__FILE__))));
+            $candidate = getcwd() ?: dirname(__FILE__, 4);
             self::$basePath = rtrim($candidate, DIRECTORY_SEPARATOR);
         }
 
@@ -31,46 +36,82 @@ class Install
     }
 
     /**
-     * Called after every "composer update" command, or after a "composer install"
-     * command has been executed without a lock file present
-     *
-     * @param Composer\Script\Event $event
+     * The project directory name as a lowercase, hyphenated slug - used for both the
+     * DDEV project name (a hostname) and the theme directory.
      */
-    public static function postCreateProject(Event $event)
+    public static function getProjectSlug(): string
+    {
+        $slug = strtolower(basename(self::getBasepath()));
+
+        return trim((string) preg_replace('/[^a-z0-9]+/', '-', $slug), '-');
+    }
+
+    public static function postCreateProject(Event $event): void
     {
         $io = $event->getIO();
         $config = [
             'ddevShouldStart' => $io->askConfirmation('Would you like DDEV to start after the installation is complete?: [y/n] ', true),
         ];
 
-        self::updateDDevName();
+        $slug = self::getProjectSlug();
+
+        self::updateDDevName($slug);
+        self::renameTheme($slug);
         self::copyEnv();
         self::removeReadme();
 
         if ($config['ddevShouldStart']) {
             self::startDDEV();
-            self::installNpm();
-            self::installComposer();
+            self::installTheme();
         }
 
         exit;
     }
 
+    protected static function updateDDevName(string $slug): void
+    {
+        $ddevConfigPath = self::getBasepath() . '/.ddev/config.yaml';
+
+        if ($slug !== '' && file_exists($ddevConfigPath)) {
+            self::replaceInFile($ddevConfigPath, self::RECIPE_NAME, $slug);
+        }
+    }
+
     /**
-     * Update the sitename placeholder in .ddev/config.yaml with the directory name
+     * Renames the Sage theme directory to the project slug, along with the paths and
+     * names that point at it, and makes it the default theme for a fresh install.
+     * The text domain is left as "sage".
      */
-    protected static function updateDDevName(): void
+    protected static function renameTheme(string $slug): void
     {
         $base = self::getBasepath();
-        $directories = explode('/', $base);
-        $directoryName = array_pop($directories);
-        $ddevConfigPath = $base . '/.ddev/config.yaml';
+        $from = $base . self::THEMES_PATH . self::RECIPE_THEME;
+        $to = $base . self::THEMES_PATH . $slug;
 
-        if (file_exists($ddevConfigPath)) {
-            $ddevConfig = file_get_contents($ddevConfigPath);
-            $ddevConfig = str_replace('{sitename}', $directoryName, $ddevConfig);
+        if ($slug === '' || $slug === self::RECIPE_THEME || !is_dir($from) || file_exists($to)) {
+            return;
+        }
 
-            file_put_contents($ddevConfigPath, $ddevConfig);
+        $themePath = 'themes/' . self::RECIPE_THEME;
+        $newThemePath = 'themes/' . $slug;
+
+        self::replaceInFile($base . self::THEME_COMMAND_PATH, $themePath, $newThemePath);
+        self::replaceInFile($from . '/vite.config.js', $themePath, $newThemePath);
+        self::replaceInFile($from . '/package.json', '"name": "' . self::RECIPE_THEME . '"', '"name": "' . $slug . '"');
+        self::replaceInFile($from . '/style.css', 'Sage Starter Theme', ucwords(str_replace('-', ' ', $slug)));
+        self::replaceInFile(
+            $base . self::APPLICATION_CONFIG_PATH,
+            "'WP_DEFAULT_THEME', '" . self::RECIPE_THEME . "'",
+            "'WP_DEFAULT_THEME', '" . $slug . "'",
+        );
+
+        rename($from, $to);
+    }
+
+    protected static function replaceInFile(string $path, string $search, string $replace): void
+    {
+        if (file_exists($path)) {
+            file_put_contents($path, str_replace($search, $replace, (string) file_get_contents($path)));
         }
     }
 
@@ -89,44 +130,27 @@ class Install
     }
 
     /**
-     * Runs "npm install" if a package.json file is present in the project.
+     * Installs the theme's yarn and composer dependencies via "ddev theme install".
+     * Root composer dependencies are already installed by create-project itself.
      */
-    protected static function installNpm(): void
+    protected static function installTheme(): void
     {
-        $basePath = self::getBasepath();
-        $themePath = $basePath . '/themes/default/';
-
-        if (file_exists($themePath . '/package.json')) {
+        if (file_exists(self::getBasepath() . self::THEME_COMMAND_PATH)) {
             echo shell_exec('ddev theme install');
         }
     }
 
-    /**
-     * Runs "composer install" if a package.json file is present in the project.
-     */
-    protected static function installComposer(): void
-    {
-        $basePath = self::getBasepath();
-
-        if (file_exists($basePath . '/composer.json')) {
-            echo shell_exec('ddev composer install');
-        }
-    }
-
-    /**
-     * Removes README.md from the project.
-     */
     protected static function removeReadme(): void
     {
-        $basePath = self::getBasepath();
+        $readmePath = self::getBasepath() . '/README.md';
 
-        if (file_exists($basePath . '/README.md')) {
-            unlink($basePath . '/README.md');
+        if (file_exists($readmePath)) {
+            unlink($readmePath);
         }
     }
 
     protected static function startDDEV(): void
     {
-        echo shell_exec('ddev start');
+        echo shell_exec('ddev launch');
     }
 }
