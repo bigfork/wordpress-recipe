@@ -32,7 +32,6 @@
     "wp-plugin/acf-image-aspect-ratio-crop": "^6",
     "wp-plugin/customizer-disabler": "^2",
     "wp-plugin/disable-gutenberg": "^3",
-    "wp-plugin/disable-search": "^2",
     "wp-plugin/duplicate-post": "^4",
     "wp-plugin/simple-page-ordering": "^2",
     "wp-plugin/slim-seo": "^4",

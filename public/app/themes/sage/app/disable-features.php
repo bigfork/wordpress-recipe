@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Disable x-powered-by header
  */
@@ -26,9 +28,7 @@ add_action('template_redirect', function () {
 /**
  * Disable featured image for pages
  */
-add_action('init', function() {
-    remove_post_type_support('page', 'thumbnail');
-});
+add_action('init', fn() =>remove_post_type_support('page', 'thumbnail'));
 
 /**
  * Disable emojis
@@ -67,9 +67,7 @@ add_action('init', function () {
     );
 });
 
-add_action('wp_footer', function () {
-    wp_dequeue_style('core-block-supports');
-});
+add_action('wp_footer', fn () => wp_dequeue_style('core-block-supports'));
 
 // Disable support for comments and trackbacks in post types
 add_action('admin_init', function () {

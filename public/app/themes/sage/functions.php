@@ -52,6 +52,7 @@ Application::configure()
 collect([
     'setup',
     'disable-features',
+    'disable-search',
     'filters',
     'gravity-forms',
     'query-monitor',
