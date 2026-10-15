@@ -124,13 +124,6 @@ add_action('after_setup_theme', function () {
     ]);
 
     /**
-     * Enable selective refresh for widgets in customizer.
-     *
-     * @link https://developer.wordpress.org/reference/functions/add_theme_support/#customize-selective-refresh-widgets
-     */
-    add_theme_support('customize-selective-refresh-widgets');
-
-    /**
      * Use main stylesheet for visual editor
      * @see resources/css/wysiwyg.scss
      */

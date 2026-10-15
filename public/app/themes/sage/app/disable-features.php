@@ -31,6 +31,16 @@ add_action('template_redirect', function () {
 add_action('init', fn() =>remove_post_type_support('page', 'thumbnail'));
 
 /**
+ * Disable the Customizer - nobody gets the cap, so core hides every link and blocks customize.php
+ */
+add_filter(
+    'map_meta_cap',
+    fn(array $caps, string $cap) => $cap === 'customize' ? ['do_not_allow'] : $caps,
+    10,
+    2,
+);
+
+/**
  * Disable emojis
  */
 add_action('init', function () {
