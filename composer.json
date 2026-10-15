@@ -79,5 +79,8 @@
     "post-autoload-dump": [
       "Roots\\Acorn\\ComposerScripts::postAutoloadDump"
     ]
+  },
+  "replace": {
+    "wordpress/mcp-adapter": "*"
   }
 }
