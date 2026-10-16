@@ -41,6 +41,23 @@ add_filter(
 );
 
 /**
+ * Disable the Design (site editor) and Fonts (font library) screens
+ */
+add_action('admin_menu', function (): void {
+    remove_submenu_page('themes.php', 'site-editor.php');
+    remove_submenu_page('themes.php', 'font-library.php');
+});
+
+add_action('admin_init', function (): void {
+    global $pagenow;
+
+    if (in_array($pagenow, ['site-editor.php', 'font-library.php'], true)) {
+        wp_safe_redirect(admin_url());
+        exit;
+    }
+});
+
+/**
  * Disable emojis
  */
 add_action('init', function () {

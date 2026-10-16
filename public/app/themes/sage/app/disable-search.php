@@ -22,9 +22,6 @@ add_action('parse_query', function (\WP_Query $query): void {
 
 add_filter('get_search_form', '__return_empty_string', 999);
 
-add_action('widgets_init', fn() => unregister_widget('WP_Widget_Search'), 1);
-
-// A fresh install seeds sidebar-primary with a Search block widget
 add_action('init', function (): void {
     if (\WP_Block_Type_Registry::get_instance()->is_registered('core/search')) {
         unregister_block_type('core/search');
