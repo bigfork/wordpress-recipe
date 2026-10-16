@@ -18,6 +18,9 @@ class Install
     private const string THEMES_PATH = '/public/app/themes/';
     private const string THEME_COMMAND_PATH = '/.ddev/commands/web/theme';
     private const string APPLICATION_CONFIG_PATH = '/config/application.php';
+    private const string SALT_PLACEHOLDER = 'generateme';
+    private const int SALT_LENGTH = 64;
+    private const string SALT_CHARACTERS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!#%&()*+,-./:;<=>?@[]^_{|}~';
 
     private static string $basePath = '';
 
@@ -127,6 +130,42 @@ class Install
         if (file_exists($examplePath) && !file_exists($envPath)) {
             copy($examplePath, $envPath);
         }
+
+        self::generateSalts($envPath);
+    }
+
+    /**
+     * Replaces each placeholder salt in the .env with its own random value
+     */
+    protected static function generateSalts(string $envPath): void
+    {
+        if (!file_exists($envPath)) {
+            return;
+        }
+
+        $contents = (string) preg_replace_callback(
+            '/"' . self::SALT_PLACEHOLDER . '"/',
+            static fn (): string => '"' . self::generateSalt() . '"',
+            (string) file_get_contents($envPath),
+        );
+
+        file_put_contents($envPath, $contents);
+    }
+
+    /**
+     * Excludes characters that are special inside a double-quoted dotenv value ($ " \ ')
+     */
+    protected static function generateSalt(): string
+    {
+        $chars = self::SALT_CHARACTERS;
+        $max = strlen($chars) - 1;
+        $salt = '';
+
+        for ($i = 0; $i < self::SALT_LENGTH; $i++) {
+            $salt .= $chars[random_int(0, $max)];
+        }
+
+        return $salt;
     }
 
     /**
