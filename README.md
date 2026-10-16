@@ -76,6 +76,8 @@ ddev theme watch
 - **Plugins:** ACF Pro, ACF Extended, ACF Image Aspect Ratio Crop, Disable Gutenberg, Duplicate Post, Simple Page Ordering, Slim SEO, Wordfence, WP Rocket, Bigfork HTML Sitemap
 - **Dev only:** Query Monitor, Symfony VarDumper, PHP_CodeSniffer
 - **mu-plugins:** ACF field group sync via WP-CLI, auto-updates (with plugin installs locked down for CMS users), 404 caching, hidden login URL, REST API restrictions, youtube-nocookie embeds, indexing disallowed outside production
+- **Theme security** (`app/security.php`): XML-RPC and Application Passwords off, generic login and lost password errors
+- **`.htaccess` hardening:** XML-RPC and scripts in uploads are blocked, plus `X-Frame-Options`, `frame-ancestors`, `Referrer-Policy`, `Permissions-Policy` and HSTS headers. HSTS has no `includeSubDomains` or `preload` by default — add them per project only once every subdomain is on HTTPS. Point the host’s document root at `public/`; the root `.htaccess` is a fallback that still denies env, Composer and config files
 - **Deploy helpers** in `util/`: WP Rocket cache generation and an OPcache clear script
 
 ## Working on the recipe

@@ -1,2 +1,16 @@
+# Only used when the host's document root is the project root rather than public/.
+# The denies below keep config, dependencies and env files private even if
+# mod_rewrite is unavailable.
+
+<IfModule mod_authz_core.c>
+    <FilesMatch "^(\.env.*|composer\.(json|lock)|wp-cli(\.local)?\.yml|phpcs\.xml|.*\.(md|log|sh))$">
+        Require all denied
+    </FilesMatch>
+</IfModule>
+
+<IfModule mod_alias.c>
+    RedirectMatch 404 ^/(\.git|\.ddev|\.idea|config|util|vendor)/.
+</IfModule>
+
 RewriteEngine On
 RewriteRule ^(.*)$ public/$1

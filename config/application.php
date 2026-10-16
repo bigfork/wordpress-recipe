@@ -77,7 +77,6 @@ Config::define('ACF_PRO_LICENSE', env('ACF_PRO_LICENSE') ?: '');
 Config::define('WP_CACHE', env('WP_CACHE') ?? true);
 Config::define('WP_ROCKET_EMAIL', env('WP_ROCKET_EMAIL') ?: '');
 Config::define('WP_ROCKET_KEY', env('WP_ROCKET_KEY') ?: '');
-Config::define('IMAGIFY_API_KEY', env('IMAGIFY_API_KEY') ?: '');
 
 /**
  * Custom Content Directory

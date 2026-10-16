@@ -47,6 +47,25 @@
     </FilesMatch>
 </IfModule>
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Block XML-RPC (also disabled in the theme’s app/security.php).
+
+<IfModule mod_authz_core.c>
+    <Files "xmlrpc.php">
+        Require all denied
+    </Files>
+</IfModule>
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Stop scripts executing from the uploads directory.
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^app/uploads/.*\.(php[0-9]?|phtml|phar|pl|py|cgi|sh)$ - [F,NC]
+</IfModule>
+
 # ----------------------------------------------------------------------
 # | Content Type Options                                               |
 # ----------------------------------------------------------------------
@@ -58,11 +77,25 @@
 </IfModule>
 
 # ----------------------------------------------------------------------
+# | Framing, referrer and permissions                                  |
+# ----------------------------------------------------------------------
+
+# Stop the site being framed by other origins (clickjacking), limit the
+# referrer sent cross-origin and switch off browser features we don't use.
+
+<IfModule mod_headers.c>
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Content-Security-Policy "frame-ancestors 'self'"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), usb=()"
+</IfModule>
+
+# ----------------------------------------------------------------------
 # | HTTP Strict Transport Security (HSTS)                              |
 # ----------------------------------------------------------------------
 
 <IfModule mod_headers.c>
-    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" "expr=%{HTTPS} == 'on' || %{HTTP:X-Forwarded-Proto} == 'https'"
+    Header always set Strict-Transport-Security "max-age=31536000" "expr=%{HTTPS} == 'on' || %{HTTP:X-Forwarded-Proto} == 'https'"
 </IfModule>
 
 # ----------------------------------------------------------------------

@@ -53,6 +53,7 @@ collect([
     'setup',
     'disable-features',
     'disable-search',
+    'security',
     'filters',
     'gravity-forms',
     'query-monitor',
