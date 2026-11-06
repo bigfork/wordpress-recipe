@@ -1,5 +1,5 @@
 name: wordpress-recipe
-type: php
+type: wp-bedrock
 docroot: public
 php_version: "8.4"
 webserver_type: apache-fpm
